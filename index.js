@@ -14,12 +14,38 @@
 
 // Dependencies
 const http = require('http');
+const https = require('https');
 const url = require('url');
 const StringDecoder = require('string_decoder').StringDecoder;
 const config = require('./config');
+const fs = require('fs');
 
-// Server should respond to all requests with a string
-const server = http.createServer((req, res) => {
+// Instantiate HTTP server
+const httpServer = http.createServer((req, res) => {
+  unifiedServer(req, res);
+});
+
+// Start the server, listen on env port
+httpServer.listen(config.httpPort, () =>
+  console.log(`HTTP server listening on port ${config.httpPort}`)
+);
+
+// Instantiate HTTPS server
+const httpsServerOptions = {
+  key: fs.readFileSync('./https/key.pem'),
+  cert: fs.readFileSync('./https/cert.pem'),
+};
+const httpsServer = https.createServer(httpsServerOptions, (req, res) => {
+  unifiedServer(req, res);
+});
+
+// Start HTTPS server
+httpsServer.listen(config.httpsPort, () =>
+  console.log(`HTTPS server listening on port ${config.httpsPort}`)
+);
+
+// All server logic for both http and https server
+const unifiedServer = (req, res) => {
   // Get URL and parse it - 2nd bool param to call querystring module
   const parsedUrl = url.parse(req.url, true);
 
@@ -90,22 +116,21 @@ const server = http.createServer((req, res) => {
       console.log('Returning response: ', statusCode, payloadString);
     });
   });
-});
-
-// Start the server, have it listen env port
-server.listen(config.port, () =>
-  console.log(
-    `Server listening on port ${config.port} in ${config.envName} mode`
-  )
-);
+};
 
 // Define handlers
 const handlers = {
-  // data will receive all parsed info from server above
-  sample: function(data, callback) {
-    // Callback an http status code and a payload obj
-    callback(406, { name: 'sample handler' });
+  // // data will receive all parsed info from server above
+  // sample: function(data, callback) {
+  //   // Callback an http status code and a payload obj
+  //   callback(406, { name: 'sample handler' });
+  // },
+
+  // Just respond with 200
+  ping: function(data, callback) {
+    callback(200);
   },
+
   notFound: function(data, callback) {
     callback(404);
   },
@@ -113,5 +138,5 @@ const handlers = {
 
 // Define request router
 const router = {
-  sample: handlers.sample,
+  ping: handlers.ping,
 };

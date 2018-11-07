@@ -11,8 +11,8 @@ const environments = {
     envName: 'staging',
   },
   production: {
-    httpPort: 80,
-    httpsPort: 443,
+    httpPort: 5000, //80
+    httpsPort: 5001, //443
     envName: 'production',
   },
 };
