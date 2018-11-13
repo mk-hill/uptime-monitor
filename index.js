@@ -15,6 +15,7 @@
 // Dependencies
 const server = require('./lib/server');
 const workers = require('./lib/workers');
+const cli = require('./lib/cli');
 
 // Declare app
 const app = {
@@ -25,6 +26,11 @@ const app = {
 
     // Start workers
     workers.init();
+
+    // Start CLI prompt last
+    setTimeout(() => {
+      cli.init();
+    }, 50);
   },
 };
 
