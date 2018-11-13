@@ -9,6 +9,11 @@ const app = {
     sessionToken: false,
   },
 
+  init() {
+    // Bind all form submissions
+    this.bindForms();
+  },
+
   // AJAX Client for restful API
   client: {
     request(headers, path, method, queryStringObject, payload, callback) {
@@ -167,7 +172,7 @@ const app = {
                   ? elements[i].classList.value
                   : '';
               const valueOfElement =
-                elements[i].type == 'checkbox' &&
+                elements[i].type === 'checkbox' &&
                 !classOfElement.includes('multiselect')
                   ? elements[i].checked
                   : !classOfElement.includes('intval')
@@ -176,22 +181,22 @@ const app = {
               const elementIsChecked = elements[i].checked;
               // Override the method of the form if the input's name is _method
               let nameOfElement = elements[i].name;
-              if (nameOfElement == '_method') {
+              if (nameOfElement === '_method') {
                 method = valueOfElement;
               } else {
                 // Create an payload field named "method" if the elements name is actually httpmethod
-                if (nameOfElement == 'httpmethod') {
+                if (nameOfElement === 'httpmethod') {
                   nameOfElement = 'method';
                 }
                 // Create an payload field named "id" if the elements name is actually uid
-                if (nameOfElement == 'uid') {
+                if (nameOfElement === 'uid') {
                   nameOfElement = 'id';
                 }
                 // If the element has the class "multiselect" add its value(s) as array elements
                 if (classOfElement.includes('multiselect')) {
                   if (elementIsChecked) {
                     payload[nameOfElement] =
-                      typeof payload[nameOfElement] == 'object' &&
+                      typeof payload[nameOfElement] === 'object' &&
                       payload[nameOfElement] instanceof Array
                         ? payload[nameOfElement]
                         : [];
@@ -317,9 +322,108 @@ const app = {
     }
   },
 
-  init() {
-    // Bind all form submissions
-    this.bindForms();
+  // Get the session token from localstorage and set it in the app.config object
+  getSessionToken() {
+    const tokenString = localStorage.getItem('token');
+    if (typeof tokenString === 'string') {
+      try {
+        const token = JSON.parse(tokenString);
+        app.config.sessionToken = token;
+        if (typeof token === 'object') {
+          app.setLoggedInClass(true);
+        } else {
+          app.setLoggedInClass(false);
+        }
+      } catch (e) {
+        app.config.sessionToken = false;
+        app.setLoggedInClass(false);
+      }
+    }
+  },
+
+  // Set (or remove) the loggedIn class from the body
+  setLoggedInClass(add) {
+    const target = document.querySelector('body');
+    if (add) {
+      target.classList.add('loggedIn');
+    } else {
+      target.classList.remove('loggedIn');
+    }
+  },
+
+  // Set the session token in the app.config object as well as localstorage
+  setSessionToken(token) {
+    app.config.sessionToken = token;
+    const tokenString = JSON.stringify(token);
+    localStorage.setItem('token', tokenString);
+    if (typeof token === 'object') {
+      app.setLoggedInClass(true);
+    } else {
+      app.setLoggedInClass(false);
+    }
+  },
+
+  // Renew the token
+  renewToken(callback) {
+    const currentToken =
+      typeof app.config.sessionToken === 'object'
+        ? app.config.sessionToken
+        : false;
+    if (currentToken) {
+      // Update the token with a new expiration
+      const payload = {
+        id: currentToken.id,
+        extend: true,
+      };
+      app.client.request(
+        undefined,
+        'api/tokens',
+        'PUT',
+        undefined,
+        payload,
+        function(statusCode, responsePayload) {
+          // Display an error on the form if needed
+          if (statusCode === 200) {
+            // Get the new token details
+            const queryStringObject = { id: currentToken.id };
+            app.client.request(
+              undefined,
+              'api/tokens',
+              'GET',
+              queryStringObject,
+              undefined,
+              function(statusCode, responsePayload) {
+                // Display an error on the form if needed
+                if (statusCode === 200) {
+                  app.setSessionToken(responsePayload);
+                  callback(false);
+                } else {
+                  app.setSessionToken(false);
+                  callback(true);
+                }
+              }
+            );
+          } else {
+            app.setSessionToken(false);
+            callback(true);
+          }
+        }
+      );
+    } else {
+      app.setSessionToken(false);
+      callback(true);
+    }
+  },
+
+  // Loop to renew token every minute
+  tokenRenewalLoop() {
+    setInterval(function() {
+      app.renewToken(function(err) {
+        if (!err) {
+          console.log('Token renewed successfully @ ' + Date.now());
+        }
+      });
+    }, 1000 * 60);
   },
 };
 
