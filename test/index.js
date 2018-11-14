@@ -2,10 +2,13 @@
  * Test runner
  */
 
+// Override NODE_ENV variable
+process.env.NODE_ENV = 'testing';
+
 // Dependencies
-const helpers = require('../lib/helpers');
-const assert = require('assert');
 const cli = require('../lib/cli');
+const unitTests = require('./unit');
+const apiTests = require('./api');
 
 // Logic runner for test runner
 const app = {
@@ -99,32 +102,13 @@ const app = {
     cli.centered('END TEST REPORT');
     cli.horizontalLine();
     cli.verticalSpace();
+    process.exit(0);
   },
 
   // Container for tests
   tests: {
-    unit: {
-      // Assert that getANumber() is returning a 1
-      getANumberType(done) {
-        const val = helpers.getANumber();
-        assert.equal(typeof val, 'number');
-        done();
-      },
-
-      // Assert that getANumber() is returning a 1
-      getANumber1(done) {
-        const val = helpers.getANumber();
-        assert.equal(val, 1);
-        done();
-      },
-
-      // Assert that getANumber() is returning a 2
-      getANumber2(done) {
-        const val = helpers.getANumber();
-        assert.equal(val, 2);
-        done();
-      },
-    },
+    unit: unitTests,
+    api: apiTests,
   },
 };
 

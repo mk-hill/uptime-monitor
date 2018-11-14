@@ -19,8 +19,8 @@ const cli = require('./lib/cli');
 
 // Declare app
 const app = {
-  // Initialize app
-  init() {
+  // Initialize app - Added callback for api testing
+  init(callback) {
     // Start server
     server.init();
 
@@ -30,12 +30,17 @@ const app = {
     // Start CLI prompt last
     setTimeout(() => {
       cli.init();
+      if (callback) {
+        callback();
+      }
     }, 50);
   },
 };
 
-// Execute init
-app.init();
+// Execute init only if file is invoked directly to enable test runner
+if (require.main === module) {
+  app.init();
+}
 
 // Export app
 module.exports = app;
