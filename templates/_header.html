@@ -13,6 +13,10 @@
 
     <!-- Static Assets -->
     <link type="image/x-icon" rel="icon" href="favicon.ico" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Quicksand:400,700"
+      rel="stylesheet"
+    />
     <script type="text/javascript" charset="utf-8" src="public/app.js"></script>
     <link rel="stylesheet" href="public/app.css" />
   </head>
@@ -22,22 +26,29 @@
     <div class="wrapper">
       <!-- Header -->
       <div class="header">
-        <!-- Logo -->
-        <a class="logo" href="/"> <img src="public/logo.png" alt="Logo"/></a>
+        <!-- Logo and Title -->
+        <div class="logo-box">
+          <a class="logo" href="/"> <img src="public/logo.png" alt="Logo"/></a>
+          <ul class="title-list">
+            <li>
+              <a id="title" href="/">plugd</a>
+            </li>
+          </ul>
+        </div>
 
         <!-- Navigation -->
         <ul class="menu">
           <li class="loggedOut"><a href="/">Home</a></li>
-          <li class="loggedOut"><a href="/account/create">Sign up</a></li>
-          <li class="loggedOut"><a href="/session/create">Log in</a></li>
+          <li class="loggedOut"><a href="/account/create">Sign Up</a></li>
+          <li class="loggedOut"><a href="/session/create">Log In</a></li>
           <li class="loggedIn"><a href="/checks/all">Dashboard</a></li>
-          <li class="loggedIn"><a href="/account/edit">Account Settings</a></li>
-          <li class="loggedIn"><a id="logoutButton" href="#">Log out</a></li>
+          <li class="loggedIn"><a href="/account/edit">Account</a></li>
+          <li class="loggedIn"><a id="logoutButton" href="#">Log Out</a></li>
         </ul>
       </div>
 
       <!-- Page-specific Content -->
-      <div class="content"></div>
-    </div>
+      <div class="content">
+    
   </body>
 </html>
