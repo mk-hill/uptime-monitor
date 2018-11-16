@@ -1,0 +1,22 @@
+<h1>Enable SMS Alerts</h1>
+<h2>You must verify your phone number in order to receive SMS alerts</h2>
+<!--
+  <h3>Click the button below to receive a text message with your code</h3>
+-->
+
+<div class="ctaWrapper"><button class="cta green">Send Me a Code!</button></div>
+
+<hr />
+<div class="formWrapper">
+  <form id="accountVerify" action="/api/tokens" method="POST">
+    <div class="formError"></div>
+    <div class="inputWrapper">
+      <div class="inputLabel">Verification Code</div>
+      <input type="text" name="code" placeholder="123456" />
+    </div>
+
+    <div class="inputWrapper ctaWrapper">
+      <button type="submit" class="cta blue">Submit</button>
+    </div>
+  </form>
+</div>

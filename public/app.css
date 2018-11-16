@@ -4,6 +4,7 @@
  */
 
 /* Resets */
+
 body,
 p,
 h1,
@@ -46,13 +47,11 @@ textarea {
 }
 
 body {
-  /* height: 100vh; */
   background: linear-gradient(
     to bottom,
     rgb(248, 248, 248),
     rgb(231, 231, 231)
   );
-  /* background-repeat: no-repeat; */
   background-attachment: fixed;
 }
 
@@ -116,16 +115,12 @@ body {
   align-content: center;
   align-items: center;
   background-color: rgba(252, 252, 252, 0.95);
-  /* border-width: 0 0 1px 0;
-  border-style: solid;
-  border-color: rgba(255, 255, 255, 0.5); */
   box-shadow: 0 -25px 11px 20px #000;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   padding: 1rem 0;
-  /* min-width: 1200px; */
 }
 
 .logo-box {
@@ -211,7 +206,6 @@ body.loggedIn .header ul li.loggedOut {
   align-content: center;
   align-items: center;
   justify-content: center;
-  /* margin-top: 1rem; */
 }
 
 .footer .copyright {
@@ -219,13 +213,10 @@ body.loggedIn .header ul li.loggedOut {
 }
 
 /* Index */
+
 h1 {
   font-size: 3rem;
-  /* margin-top: 100%; */
   text-align: center;
-  /* font-size: 20px; */
-  /* text-transform: uppercase; */
-  /* font-weight: bold; */
   margin-bottom: 1rem;
   margin-top: -2rem;
 }
@@ -233,10 +224,14 @@ h1 {
 h2 {
   font-size: 2rem;
   text-align: center;
-  /* font-size: 13px; */
-  /* text-transform: uppercase; */
-  /* font-weight: bold; */
   margin-bottom: 2rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  /* margin-top: -1rem; */
 }
 
 body.index .blurb {
@@ -249,19 +244,6 @@ body.index .blurb {
 body.index .blurb p {
   margin-top: 2vh;
 }
-/* body.index .blurb {
-  text-align: center;
-  background-color: #ececec;
-  border-color: #b3b3b3;
-  border-style: dotted;
-  border-width: 1px;
-  border-radius: 10px;
-  padding: 20px;
-  margin: 0 auto 20px auto;
-  max-width: 500px;
-  line-height: 150%;
-  font-size: 14px;
-} */
 
 .ctaWrapper {
   text-align: center;
@@ -275,7 +257,6 @@ button.cta:hover,
 button.cta:active,
 button.cta:visited {
   margin: 0 5vw;
-  /* margin: 0 auto; */
   background-color: #1a1a1a;
   color: #fff;
   border-radius: 10px;
@@ -312,13 +293,13 @@ button.cta:hover,
 .warning {
   font-style: italic;
   color: #c83737;
-  /* font-size: 17px; */
   text-align: center;
   line-height: 150%;
   padding: 0 0 1.5rem 0;
 }
 
 /* Form Styling for Account Creation page and others */
+
 .formWrapper {
   margin: 0 auto;
   max-width: 600px;
@@ -335,9 +316,6 @@ button.cta:hover,
   border-radius: 5px;
   margin: 0 0 15px 0;
   text-align: center;
-  /* border-color: #d87070;
-  border-width: 2px;
-  border-style: solid; */
 }
 
 .formSuccess {
@@ -349,9 +327,6 @@ button.cta:hover,
   border-radius: 5px;
   margin: 0 0 15px 0;
   text-align: center;
-  /* border-color: #35c06d;
-  border-width: 2px;
-  border-style: solid; */
 }
 
 hr {
@@ -391,7 +366,6 @@ input.disabled {
 }
 
 .backButton {
-  /* text-transform: uppercase; */
   font-weight: bold !important;
   display: inline-block !important;
   width: 100px;
@@ -414,20 +388,16 @@ tr {
 
 th {
   text-transform: uppercase;
-  /* text-align: left; */
   font-weight: bold;
   padding: 10px;
   border-bottom: 1px solid rgba(192, 192, 192, 0.3);
   border-right: 1px solid rgba(192, 192, 192, 0.3);
   border-top: 1px solid rgba(192, 192, 192, 0.3);
-  /* padding: 10px; */
-  /* margin: 0 0 10px 0; */
   background-color: #d4d4d423;
 }
 
 td {
   padding: 5px;
-  /* text-align: center; */
   border-bottom: 1px solid rgba(192, 192, 192, 0.3);
   border-right: 1px solid rgba(192, 192, 192, 0.3);
 }
@@ -458,12 +428,13 @@ td a:active {
 }
 
 #createCheckCTA {
+  width: 100%;
   margin-top: 40px;
   display: none;
 }
 #tosWrapper {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-content: center;
   align-items: center;
 }
