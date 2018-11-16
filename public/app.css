@@ -330,6 +330,7 @@ button.cta:hover,
 }
 
 hr {
+  color: transparent;
   margin: 1rem 0;
 }
 
@@ -427,6 +428,10 @@ td a:active {
   margin-top: 1rem;
 }
 
+/* #verifyButton {
+  display: none;
+} */
+
 #createCheckCTA {
   width: 100%;
   margin-top: 40px;
@@ -441,8 +446,25 @@ td a:active {
 
 #tosWrapper input {
   width: min-content;
+  max-width: 25px;
 }
 
 #tosWrapper div {
+  width: max-content;
   padding-bottom: 2px;
+}
+
+body.checksEdit h2,
+body.accountEdit h2 {
+  margin: 0.5rem 0 0.5rem 0;
+}
+
+body.checksEdit button.cta,
+body.accountEdit button.cta {
+  margin-top: 0.7rem;
+}
+
+body.accountVerify .formWrapper {
+  /* margin-top: -0.6rem; */
+  padding-top: 0;
 }
